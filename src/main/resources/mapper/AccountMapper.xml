@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanou.base.mapper.AccountMapper">
+    <resultMap id="AccountMap" type="com.lanou.account.domain.Account">
+        <id column="account_id" property="account_id" />
+        <result column="recommender_id"  property="recommender_id" />
+        <result column="login_name"  property="login_name" />
+        <result column="login_passwd"  property="login_passwd" />
+        <result column="status"  property="status" />
+        <result column="create_date"  property="create_date" />
+        <result column="pause_date"  property="pause_date" />
+        <result column="close_date"  property="close_date" />
+        <result column="real_name"  property="real_name" />
+        <result column="idcard_no"  property="idcard_no" />
+        <result column="birthdate"  property="birthdate" />
+        <result column="gender"  property="gender" />
+        <result column="occupation"  property="occupation" />
+        <result column="telephone"  property="telephone" />
+        <result column="email"  property="email" />
+        <result column="mailaddress"  property="mailaddress" />
+        <result column="zipcode"  property="zipcode" />
+        <result column="qq"  property="qq" />
+        <result column="last_login_time"  property="last_login_time" />
+        <result column="last_login_ip"  property="last_login_ip" />
+    </resultMap>
+
+  <select id="findAll" resultMap="AccountMap" parameterType="com.lanou.account.domain.Account">
+      SELECT *FROM account
+  </select>
+
+</mapper>

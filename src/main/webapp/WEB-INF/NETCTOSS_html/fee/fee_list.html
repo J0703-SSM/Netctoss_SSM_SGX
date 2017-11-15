@@ -1,0 +1,377 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--<%&#45;&#45;这个是bootstrap好用的前提,在最上边&#45;&#45;%>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link type="text/css" rel="stylesheet" media="all" href="../styles/global.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="../styles/global_color.css"/>
+
+    <script type="text/javascript" src="/js/jquery-3.2.1.js"></script>
+
+</head>
+<body>
+<!--Logo区域开始-->
+<div id="header">
+    <img src="../images/logo.png" alt="logo" class="left"/>
+    <a href="#">[退出]</a>
+</div>
+<!--Logo区域结束-->
+<!--导航区域开始-->
+<div id="navi">
+    <ul id="menu">
+        <li><a href="../index.html" class="index_off"></a></li>
+        <li><a href="../role/role_list.html" class="role_off"></a></li>
+        <li><a href="../admin/admin_list.html" class="admin_off"></a></li>
+        <li><a href="../fee/fee_list.html" class="fee_on"></a></li>
+        <li><a href="../account/account_list.html" class="account_off"></a></li>
+        <li><a href="../service/service_list.html" class="service_off"></a></li>
+        <li><a href="../bill/bill_list.html" class="bill_off"></a></li>
+        <li><a href="../report/report_list.html" class="report_off"></a></li>
+        <li><a href="../user/user_info.html" class="information_off"></a></li>
+        <li><a href="../user/user_modi_pwd.html" class="password_off"></a></li>
+    </ul>
+</div>
+<!--导航区域结束-->
+<!--主要区域开始-->
+<div id="main">
+    <form action="" method="">
+        <!--排序-->
+        <div class="search_add">
+            <div>
+                <!--<input type="button" value="月租" class="sort_asc" onclick="sort(this);" />-->
+                <input type="button" value="基费" class="cost_asc"   id="info"/>
+                <input type="button" value="时长" class="duration_asc"  id="info2"/>
+            </div>
+            <input type="button" value="增加" class="btn_add" onclick="location.href='fee_add';"/>
+        </div>
+        <!--启用操作的操作提示-->
+        <div id="operate_result_info" class="operate_success">
+            <img src="../images/close.png" onclick="this.parentNode.style.display='none';"/>
+            删除成功！
+        </div>
+        <!--数据区域：用表格展示数据-->
+        <div id="data">
+            <table id="datalist">
+                <thead>
+                <tr>
+                    <th>资费ID</th>
+                    <th class="width100">资费名称</th>
+                    <th>基本时长</th>
+                    <th>基本费用</th>
+                    <th>单位费用</th>
+                    <th>创建时间</th>
+                    <th>开通时间</th>
+                    <th class="width50">状态</th>
+                    <th class="width200"></th>
+                </tr>
+                <!--<tr>-->
+                <!--<td>1</td>-->
+                <!--<td><a href="fee_detail.html">包 20 小时</a></td>-->
+                <!--<td>20 小时</td>-->
+                <!--<td>24.50 元</td>-->
+                <!--<td>3.00 元/小时</td>-->
+                <!--<td>2013/01/01 00:00:00</td>-->
+                <!--<td></td>-->
+                <!--<td>暂停</td>-->
+                <!--<td>                                -->
+                <!--<input type="button" value="启用" class="btn_start" onclick="startFee();" />-->
+                <!--<input type="button" value="修改" class="btn_modify" onclick="location.href='fee_modi.html';" />-->
+                <!--<input type="button" value="删除" class="btn_delete" onclick="deleteFee();" />-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>2</td>-->
+                <!--<td><a href="fee_detail.html">包 40 小时</a></td>-->
+                <!--<td>40 小时</td>-->
+                <!--<td>40.50 元</td>-->
+                <!--<td>3.00 元/小时</td>-->
+                <!--<td>2013/01/21 00:00:00</td>-->
+                <!--<td>2013/01/23 00:00:00</td>-->
+                <!--<td>开通</td>-->
+                <!--<td>                                -->
+                <!--</td>-->
+                <!--</tr>-->
+                </thead>
+                <tbody id="tab">
+
+
+                </tbody>
+
+            </table>
+            <p>业务说明：<br/>
+                1、创建资费时，状态为暂停，记载创建时间；<br/>
+                2、暂停状态下，可修改，可删除；<br/>
+                3、开通后，记载开通时间，且开通后不能修改、不能再停用、也不能删除；<br/>
+                4、业务账号修改资费时，在下月底统一触发，修改其关联的资费ID（此触发动作由程序处理）
+            </p>
+        </div>
+        <!--分页-->
+        <!--<div id="page">-->
+
+        <!--&lt;!&ndash;<a href="#">上一页</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a href="#" class="current_page">1</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a href="#">2</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a href="#">3</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a href="#">4</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a href="#">5</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a href="#">下一页</a>&ndash;&gt;-->
+        <!--</div>-->
+        <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-9">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination" id="page">
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+
+
+    </form>
+</div>
+<!--主要区域结束-->
+<div id="footer">
+    <p>[源自北美的技术，最优秀的师资，最真实的企业环境，最适用的实战项目]</p>
+    <p>版权所有(C)云科技有限公司</p>
+</div>
+</body>
+<script language="javascript" type="text/javascript">
+
+
+//            var attr = $("#info2").attr("class");
+//            function sort2(btnObj2) {
+//                if (btnObj2.className == "sort_desc") {
+//                    if (btnObj2.id == "cost_desc") {
+//                        btnObj2.className = "sort_asc";
+//                        pageAll("sort_asc", 1, 3);
+//                    }
+//                }
+//                else {
+//                    btnObj2.className = "duration_desc";
+//                    pageAll("duration_desc", 1, 3);
+//                }
+//            }
+
+
+
+    //启用
+    function startFee() {
+        var r = window.confirm("确定要启用此资费吗？资费启用后将不能修改和删除。");
+        document.getElementById("operate_result_info").style.display = "block";
+        var QyId = $(this).attr("QyId");
+        $.ajax({
+            url: "/updateQy",
+            data: {
+                "cost_id": QyId
+            },
+            success: function (result) {
+                var showQy = result.showQy;
+                addNewTR(showQy.startime == 0 | showQy.startime == null ? "" : new Date(parseInt(showQy.startime)).toLocaleString(), showQy.status);
+
+            }
+
+        })
+        ref();
+
+    }
+    //刷新
+    function ref() {
+        window.location.reload();
+
+    }
+
+    //修改+回显
+    function updateUp() {
+        var updateId = $(this).attr("updateId");
+        location.href = "/fee/fee_modi?cost_id=" + updateId;
+
+
+    }
+
+
+    //删除
+    function deleteFee() {
+        var r = window.confirm("确定要删除此资费吗？");
+        document.getElementById("operate_result_info").style.display = "block";
+        var aid = $(this).attr("deleteId");
+        $.ajax({
+            url: "/deleteFee",
+            data: {
+                "cost_id": aid
+            }
+
+        })
+        ref();
+
+
+    }
+
+    //咨询名称 +回显
+    function findByname() {
+        var findBynameId = $(this).attr("findBynameId");
+        location.href = "/fee/fee_detail?cost_id=" + findBynameId;
+    }
+
+
+    //        new 这就是页面的输入的内容
+    function addNewTR(cost_id, name, base_duration, base_cost, unit_cost, creatime, startime, status) {
+        var td1 = $("<td></td>").html("<p>" + cost_id + "</p>");
+        var td2 = $("<td></td>")
+        var td3 = $("<td></td>")
+        if (base_duration == null) {
+            $("<p></p>").appendTo(td3)
+        } else {
+            $("<p>" + base_duration + "小时</p>").appendTo(td3)
+        }
+        var td4 = $("<td></td>")
+
+        if (base_cost == null) {
+            $("<p></p>").appendTo(td4)
+        } else {
+            $("<p>" + base_cost + "元</p>").appendTo(td4)
+        }
+        var td5 = $("<td></td>")
+
+        if (unit_cost == null) {
+            $("<p></p>").appendTo(td5)
+        } else {
+            $("<p>" + unit_cost + "元/小时</p>").appendTo(td5)
+        }
+
+        //这里把time类型转为date类型
+        var td6 = $("<td></td>").html("<p>" + creatime == 0 | creatime == null ? "" : new Date(parseInt(creatime)).toLocaleString() + "</p>")
+        var td7 = $("<td></td>").html("<p>" + startime == 0 | startime == null ? "" : new Date(parseInt(startime)).toLocaleString() + "</p>")
+        var td8 = $("<td></td>").html("<p>" + status + "</p>")
+        var td9 = $("<td></td>")
+        if (status == "开通") {
+            $("<p>启用成功</p>").appendTo(td9)
+        } else {
+            $("<input type='button' value='启用' class='btn_start'/>").appendTo(td9).click(startFee).attr("QyId", cost_id);
+            $("<input type='button' value='修改' class='btn_modify'/>").appendTo(td9).click(updateUp).attr("updateId", cost_id)
+            $("<input type='button' value='删除' class='btn_delete'/>").appendTo(td9).click(deleteFee).attr("deleteId", cost_id)
+        }
+        $("<a href='#'></a>").html("<p>" + name + "</p>").appendTo(td2).click(findByname).attr("findBynameId", cost_id)
+        var append = $("<tr></tr>").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7).append(td8).append(td9);
+        $("#tab").append(append)
+    }
+
+
+    //分页
+    function pageAll(info,pageNum, pageSize) {
+        $.ajax({
+            url: "/pageAll",
+            data: {
+                "info": info, "pageNum": pageNum, "pageSize": pageSize
+            },
+            success: function (result) {
+//                    console.log(result);
+                var list = result.list;
+                //这块注意一下
+                $("#tab").html("");
+                $("#page").html("");
+                //调用分页方法
+                //传入两个参数 一个结果集 一个地址
+                showPage(result, "/pageAll")
+                for (var i = 0; i < list.length; i++) {
+                    addNewTR(list[i].cost_id, list[i].name, list[i].base_duration, list[i].base_cost,
+                        list[i].unit_cost, list[i].creatime, list[i].startime, list[i].status);
+                }
+
+            }
+
+        })
+
+    }
+
+
+
+
+    //排序按钮的点击事件
+
+    var attr = $("#info").attr("class");
+    $("#info").click(function (){  ////sdafsafasfasdfasdf,
+        if (attr == "cost_desc") {
+            attr = "cost_asc";
+            pageAll("cost_asc", 1, 3);
+        }
+        else {
+            attr = "cost_desc";
+            pageAll("cost_desc", 1, 3);
+        }
+
+
+    })
+    var attr = $("#info2").attr("class");
+    $("#info2").click(function () {
+        if (attr == "duration_asc") {
+            attr = "duration_desc";
+            pageAll("duration_desc", 1, 3);
+        }
+        else {
+            attr = "duration_asc";
+            pageAll("duration_asc", 1, 3);
+        }
+
+
+    })
+    pageAll(attr, 1, 3);
+
+
+    function showPage(result) {
+
+        //首页
+        var firstPage = $("<li> <a href='#' onclick='pageAll(attr," + 1 + ",3)'>首页</a> </li>");
+        $("#page").append(firstPage);
+
+
+        // 上一页
+        var beforeLiFalse = $("<li> <span> <span aria-hidden='true'>&laquo;</span> </span> </li>");
+        var beforeLiTrue = $("<li> <a href='#' onclick='pageAll(attr," + result.prePage + ",3)' aria-label='Previous'>上一页<span aria-hidden='true'>&laquo;</span></a> </li>");
+        var beforePage = result.hasPreviousPage ? beforeLiTrue : beforeLiFalse;
+        $("#page").append(beforePage);
+
+        // 页码显示
+        var pages = result.pages;
+        for (var i = 1; i <= pages; i++) {
+            var pageTrue = $("<li> <span>" + i + "<span class='sr-only'>(current)</span></span></li>");
+            var pageFalse = $("<li><a href='#' onclick='pageAll(attr," + i + ",3)'>" + i + "</a></li>");
+            var somePage = result.pageNum == i ? pageTrue : pageFalse;
+
+            $("#page").append(somePage);
+        }
+
+        // 下一页
+        var afterLiFalse = $("<li> <span> <span aria-hidden='true'>&raquo;</span> </span> </li>");
+        var afterLiTrue = $("<li> <a href='#' onclick='pageAll(attr," + result.nextPage + ",3)' aria-label='Next'>下一页<span aria-hidden='true'>&raquo;</span></a> </li>");
+        var afterPage = result.hasNextPage ? afterLiTrue : afterLiFalse;
+
+        $("#page").append(afterPage);
+
+        //尾页
+        var lastPage = $("<li> <a href='#' onclick='pageAll(attr," + result.pages + ",3)'>尾页</a> </li>");
+        $("#page").append(lastPage);
+
+        //当前页
+        var currentPage = $("<li> <a href='#'>当前第" + result.pageNum + "页</a> </li>");
+        $("#page").append(currentPage);
+
+        //共几页
+        var totalPage = $("<li> <a href='#'>共" + result.pages + "页</a> </li>");
+        $("#page").append(totalPage);
+
+
+    }
+
+
+
+
+</script>
+
+</html>

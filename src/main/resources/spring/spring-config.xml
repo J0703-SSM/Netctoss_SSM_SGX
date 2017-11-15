@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+<!--springMvc
+-->
+  <!--1.配置注解模型 mvc-->
+    <mvc:annotation-driven/>
+    <!--配置注解扫描根路径-->
+    <context:component-scan base-package="com.lanou"/>
+
+    <!--  例如css加载和jq    springmvc第一条:将静态页面的处理交由web服务器自己处理,springmvc不处理-->
+    <mvc:default-servlet-handler/>
+
+    <!--定义静态资源的映射路径  jq -->
+    <!--<mvc:resources mapping="js/**" location="js"/>-->
+
+    <!--springmvc第二条:配置试图解析规则-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+             <!--配置视图解析的前缀-->
+        <property name="prefix" value="/WEB-INF/NETCTOSS_html/"/>
+            <!--配置视图解析的后缀-->
+        <property name="suffix" value=".html" />
+    </bean>
+
+
+    <!--mybatis
+-->
+    <!--引入db属性文件-->
+    <context:property-placeholder location="classpath:spring/db.properties"/>
+    <!--1.配置数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${driver}"/>
+        <property name="jdbcUrl" value="${url}"/>
+        <property name="user" value="${username}"/>
+        <property name="password" value="${password}"/>
+    </bean>
+    <!--2.配置SqlsessionFactory-->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--引入mybatis的全局配置-->
+        <!--<property name="configLocation" value="classpath:mybatis-config.xml"/>-->
+
+
+        <property name="mapperLocations" value="classpath*:mapper/*.xml"/>
+
+
+
+        <!--分页(mybatis)-->
+        <property name="plugins" >
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <value>
+                            dialect=mysql
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+
+
+
+
+
+    </bean>
+
+    <!--3.配置事务-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--4.配置事务属性 通知 比如环绕通知-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--5.配置切面aop-->
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* com.lanou.*.service.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+    </aop:config>
+
+    <!--6.配置mybayis中的mapper接口自动扫描-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--mapper接口代理对象所在的包-->
+        <property name="basePackage" value="com.lanou.base.mapper"/>
+        <!--定义sessionFactory,引用上面配置的工厂对象-->
+        <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
+    </bean>
+
+
+
+    <!--文件上传-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--设置上传文件的大小-->
+        <property name="maxUploadSize" value="5242880"/>
+
+
+    </bean>
+
+</beans>
