@@ -25,9 +25,32 @@
         <result column="last_login_time"  property="last_login_time" />
         <result column="last_login_ip"  property="last_login_ip" />
     </resultMap>
+    <sql id="Base_Column_List">
+        account_id, recommender_id, login_name, login_passwd, status, create_date, pause_date,
+        close_date, real_name, idcard_no, birthdate, gender, occupation, telephone, email,
+        mailaddress, zipcode, qq, last_login_time, last_login_ip
+    </sql>
 
-  <select id="findAll" resultMap="AccountMap" parameterType="com.lanou.account.domain.Account">
-      SELECT *FROM account
+
+  <select id="findAllGJ" resultMap="AccountMap" parameterType="com.lanou.account.domain.Account" >
+      SELECT
+      <include refid="Base_Column_List"/>
+      FROM account WHERE status LIKE CONCAT('%',#{status},'%')
+      and idcard_no LIKE CONCAT('%',#{idcard_no},'%')
+      and real_name LIKE CONCAT('%',#{real_name},'%')
+      and login_name LIKE CONCAT('%',#{login_name},'%')
   </select>
 
+    <select id="findAll" resultMap="AccountMap">
+        SELECT *FROM account
+    </select>
+
+    <select id="findById" resultMap="AccountMap" parameterType="int">
+        select
+        <include refid="Base_Column_List" />
+        from account
+        where account_id = #{account_id}
+
+
+    </select>
 </mapper>

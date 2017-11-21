@@ -23,4 +23,6 @@ public interface CostMapper {
     void updateQy(Cost cost);
 
     void insert(Cost cost);
+
+
 }

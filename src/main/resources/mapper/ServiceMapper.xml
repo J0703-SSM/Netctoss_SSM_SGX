@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanou.base.mapper.ServiceMapper">
+    <resultMap id="ServiceMap" type="com.lanou.service.domain.Service">
+        <id column="service_id"  property="service_id"/>
+        <result column="account_id"  property="account_id"/>
+        <result column="unix_host"  property="unix_host"/>
+        <result column="os_username"  property="os_username"/>
+        <result column="login_passwd"  property="login_passwd"/>
+        <result column="status"  property="status"/>
+        <result column="create_date" property="create_date"/>
+        <result column="pause_date"  property="pause_date"/>
+        <result column="close_date"  property="close_date"/>
+        <result column="cost_id"  property="cost_id"/>
+
+        <association property="account" column="account_id"
+                     javaType="com.lanou.account.domain.Account" select="com.lanou.base.mapper.AccountMapper.findById"/>
+
+        <association property="cost" column="cost_id"
+                     javaType="com.lanou.cost.domain.Cost" select="com.lanou.base.mapper.CostMapper.selectById"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        service_id, account_id, unix_host, os_username, login_passwd, status, create_date,
+        pause_date, close_date, cost_id
+    </sql>
+
+    <select id="findAll" resultMap="ServiceMap">
+        SELECT  <include refid="Base_Column_List"/> FROM service
+    </select>
+
+    <!--这家伙 连着account表啦 高级查询-->
+    <select id="findAllGj" resultMap="ServiceMap">
+
+        SELECT  <include refid="Base_Column_List"/> FROM service WHERE status LIKE CONCAT('%',#{status},'%')
+        and unix_host LIKE CONCAT('%',#{unix_host},'%')
+        and os_username LIKE CONCAT('%',#{os_username},'%')
+        and account_id in (
+        select account_id from account where idcard_no LIKE CONCAT('%',#{idcard_no},'%')
+        )
+    </select>
+
+
+
+
+</mapper>

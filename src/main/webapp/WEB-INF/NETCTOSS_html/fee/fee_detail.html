@@ -42,12 +42,11 @@
         </div>
         <div class="text_info clearfix"><span>资费状态：</span></div>
         <div class="input_info">
-            <select class="readonly"  id="status" disabled>
-                <option></option>
-                <option selected="selected"></option>
-                <!--<option>开通</option>-->
-                <!--<option>未开通</option>-->
-                <!--<option value="3">删除</option>-->
+            <select class="readonly" id="status" name="status" disabled>
+                <!--<option selected="selected"></option>-->
+                <option>开通</option>
+                <option>未开通</option>
+                <option>删除</option>
             </select>
         </div>
         <div class="text_info clearfix"><span>资费类型：</span></div>
@@ -107,7 +106,7 @@
                 var show = res.showName;
                 $("#cost_id").attr("value", show.cost_id);
                 $("#name").attr("value", show.name);
-                $("#status option").val(show.status);
+                $("#status option ").val(show.status);
                 $("#base_duration").attr("value", show.base_duration);
                 $("#base_cost").attr("value", show.base_cost);
                 $("#unit_cost").attr("value", show.unit_cost);

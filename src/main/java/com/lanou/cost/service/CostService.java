@@ -9,7 +9,7 @@ import com.lanou.cost.domain.Cost;
 public interface CostService {
 
     //分页 查询所有
-    PageInfo<Cost> queryPage(String info,Integer pageNum,Integer PagSize);
+    PageInfo<Cost> queryPage(Integer info,Integer pageNum,Integer PagSize);
 
     void deleteFee(Integer cost_id);
 
@@ -20,4 +20,6 @@ public interface CostService {
     void updateQy(Cost cost);
 
     void insert(Cost cost);
+
+    Cost findById(Integer cost_id);
 }

@@ -20,23 +20,26 @@ public class CostServiceImpl implements CostService {
     private CostMapper costMapper;
 
     //分页 +排序
-    public PageInfo<Cost> queryPage(String info,Integer pageNum, Integer PagSize) {
+    public PageInfo<Cost> queryPage(Integer info,Integer pageNum, Integer PagSize) {
         pageNum = pageNum == null ? 1 : pageNum;
         PagSize = PagSize == null ? 3 : PagSize;
-        if (info !=null) {
-            if (info.equals("cost_desc")) {
+
+            if (info ==0){
+                PageHelper.startPage(pageNum, PagSize);
+            }
+            if (info ==1 ) {
                 PageHelper.startPage(pageNum, PagSize, "base_cost desc");
             }
-            if (info.equals("cost_asc")) {
+            if (info ==2) {
                 PageHelper.startPage(pageNum, PagSize, "base_cost asc");
             }
-            if (info.equals("duration_desc")) {
+            if (info==3) {
                 PageHelper.startPage(pageNum, PagSize, "base_duration desc");
             }
-            if (info.equals("duration_asc")) {
+            if (info==4) {
                 PageHelper.startPage(pageNum, PagSize, "base_duration asc");
             }
-        }
+
         List<Cost> all = costMapper.findAll();
         PageInfo<Cost> pageInfo = new PageInfo<Cost>(all);
 
@@ -62,5 +65,9 @@ public class CostServiceImpl implements CostService {
 
     public void insert(Cost cost) {
         costMapper.insert(cost);
+    }
+
+    public Cost findById(Integer cost_id) {
+        return costMapper.selectById(cost_id);
     }
 }

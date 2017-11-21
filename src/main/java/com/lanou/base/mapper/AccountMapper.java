@@ -2,6 +2,7 @@ package com.lanou.base.mapper;
 
 import com.github.pagehelper.PageInfo;
 import com.lanou.account.domain.Account;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,5 +11,9 @@ import java.util.List;
  */
 public interface AccountMapper {
 
-    List<Account> findAll(Account account);
+    List<Account> findAllGJ(Account account);
+
+    List<Account> findAll();
+
+    Account findById(Integer account_id);
 }

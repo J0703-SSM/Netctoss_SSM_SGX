@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 
 import com.lanou.cost.domain.Cost;
 import com.lanou.cost.service.CostService;
+import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +27,13 @@ public class CostController {
     @Resource
     private CostService costService;
 
-    @RequestMapping("/")
-    public String frontPage(){
+
+
+
+    @RequestMapping("index")
+    public String Jump(){
         return "index";
     }
-
 
 
     //点击咨询费用
@@ -39,15 +42,35 @@ public class CostController {
         return "/fee/fee_list";
     }
 
+    //连接service表 根基costId查询cost信息
+    @RequestMapping(value = "/findCost")
+    @ResponseBody
+    public Cost showCost(Integer cost_id){
+        return costService.findById(cost_id);
+    }
+
+
 
     //分页+查询所有
     @ResponseBody
     @RequestMapping(value = "/pageAll")
-    public PageInfo<Cost> pageAll(@RequestParam("info")String info, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize){
+    public PageInfo<Cost> pageAll(@RequestParam("info")Integer info, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, HttpSession session){
+
         System.out.println("info+++++++"+info);
+        System.out.println("pageNum+++"+pageNum);
+        System.out.println("pageSize"+pageSize);
 //        System.out.println("info2******"+info2);
-        PageInfo<Cost> costPageInfo = costService.queryPage(info, pageNum, pageSize);
-//        System.out.println("costPageInfo分页"+costPageInfo);
+        PageInfo<Cost> costPageInfo = null;
+        //这是判断我点击分页的1,2,3,4,5,6--之后的操作数据(升序,降序)
+        if (info != 6) {
+            session.setAttribute("info",info);
+            costPageInfo = costService.queryPage(info,pageNum,pageSize);
+
+        }else {
+            Integer info1 = (Integer) session.getAttribute("info");
+            costPageInfo = costService.queryPage(info1, pageNum, pageSize);
+        }
+        System.out.println("costPageInfo分页"+ costPageInfo);
         return costPageInfo;
     }
 
@@ -115,6 +138,7 @@ public class CostController {
          return "/fee/fee_detail";
 
     }
+
     @RequestMapping("/showName")
     @ResponseBody
     public Map<String,Object> showName(HttpSession session){

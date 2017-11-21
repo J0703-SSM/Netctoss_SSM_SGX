@@ -37,9 +37,10 @@
             <form action="/fee/addCost" method="post" class="main_form">
                 <div class="text_info clearfix"><span>资费名称：</span></div>
                 <div class="input_info">
-                    <input type="text" name="name" class="width300" value=""/>
+                    <input type="text" name="name" id="name"  class="width300" oninput="nameZf()" />
                     <span class="required">*</span>
-                    <div class="validate_msg_short">50长度的字母、数字、汉字和下划线的组合</div>
+                    <div id="nameVa" class="validate_msg_short"></div>
+                    <!--50长度的字母、数字、汉字和下划线的组合-->
                 </div>
                 <div class="text_info clearfix"><span>资费类型：</span></div>
                 <div class="input_info fee_type">
@@ -90,6 +91,23 @@
         </div>
     </body>
     <script language="javascript" type="text/javascript">
+
+
+
+
+
+        function nameZf() {
+            var value1 = document.getElementById("name").value;
+            var exp = /^[0-9a-zA-Z_]{1,50}$/
+            if (!exp.exec(value1)){
+                var context = "5长度的字母、数字、汉字和下划线的组合"
+            }else {
+                var context ="正确格式"
+            }
+            var elementById = document.getElementById("nameVa");
+            elementById.innerHTML = context;
+        }
+
         //保存结果的提示
         function showResult() {
             showResultDiv(true);
@@ -139,5 +157,7 @@
         $("#btn").click(function () {
             window.location.href = "/fee/fee_list.html"
         })
+
+
     </script>
 </html>

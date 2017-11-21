@@ -45,8 +45,8 @@
         <div class="search_add">
             <div>
                 <!--<input type="button" value="月租" class="sort_asc" onclick="sort(this);" />-->
-                <input type="button" value="基费" class="cost_asc"   id="info"/>
-                <input type="button" value="时长" class="duration_asc"  id="info2"/>
+                <input type="button" value="基费" class="sort_asc"  onclick="sort(this)" id="cost"/>
+                <input type="button" value="时长" class="sort_asc"  onclick="sort(this)"  id="time"/>
             </div>
             <input type="button" value="增加" class="btn_add" onclick="location.href='fee_add';"/>
         </div>
@@ -268,7 +268,7 @@
         $.ajax({
             url: "/pageAll",
             data: {
-                "info": info, "pageNum": pageNum, "pageSize": pageSize
+                "info": info == null ? 0: info, "pageNum": pageNum, "pageSize": pageSize
             },
             success: function (result) {
 //                    console.log(result);
@@ -290,50 +290,42 @@
 
     }
 
+function sort(btnObj) {
+    //降序
 
-
-
-    //排序按钮的点击事件
-
-    var attr = $("#info").attr("class");
-    $("#info").click(function (){  ////sdafsafasfasdfasdf,
-        if (attr == "cost_desc") {
-            attr = "cost_asc";
-            pageAll("cost_asc", 1, 3);
+    if (btnObj.className == "sort_desc") {
+        if (btnObj.id == "cost") {//资金
+            pageAll(2,1,3);
+        } else {
+            pageAll(4,1,3);
         }
-        else {
-            attr = "cost_desc";
-            pageAll("cost_desc", 1, 3);
+        btnObj.className = "sort_asc";
+    } else {
+        if (btnObj.id == "time") {
+            pageAll(3,1,3);
+        } else {
+            pageAll(1,1,3);
         }
+        btnObj.className = "sort_desc";
+    }
+}
 
+    var a =6;
 
-    })
-    var attr = $("#info2").attr("class");
-    $("#info2").click(function () {
-        if (attr == "duration_asc") {
-            attr = "duration_desc";
-            pageAll("duration_desc", 1, 3);
-        }
-        else {
-            attr = "duration_asc";
-            pageAll("duration_asc", 1, 3);
-        }
-
-
-    })
-    pageAll(attr, 1, 3);
+//这是当点击咨询管理之后显示查询所有
+    pageAll(null,1, 3);
 
 
     function showPage(result) {
 
         //首页
-        var firstPage = $("<li> <a href='#' onclick='pageAll(attr," + 1 + ",3)'>首页</a> </li>");
+        var firstPage = $("<li> <a href='#' onclick='pageAll(a," + 1 + ",3)'>首页</a> </li>");
         $("#page").append(firstPage);
 
 
         // 上一页
         var beforeLiFalse = $("<li> <span> <span aria-hidden='true'>&laquo;</span> </span> </li>");
-        var beforeLiTrue = $("<li> <a href='#' onclick='pageAll(attr," + result.prePage + ",3)' aria-label='Previous'>上一页<span aria-hidden='true'>&laquo;</span></a> </li>");
+        var beforeLiTrue = $("<li> <a href='#' onclick='pageAll(a," + result.prePage + ",3)' aria-label='Previous'>上一页<span aria-hidden='true'>&laquo;</span></a> </li>");
         var beforePage = result.hasPreviousPage ? beforeLiTrue : beforeLiFalse;
         $("#page").append(beforePage);
 
@@ -341,7 +333,7 @@
         var pages = result.pages;
         for (var i = 1; i <= pages; i++) {
             var pageTrue = $("<li> <span>" + i + "<span class='sr-only'>(current)</span></span></li>");
-            var pageFalse = $("<li><a href='#' onclick='pageAll(attr," + i + ",3)'>" + i + "</a></li>");
+            var pageFalse = $("<li><a href='#' onclick='pageAll(a," + i + ",3)'>" + i + "</a></li>");
             var somePage = result.pageNum == i ? pageTrue : pageFalse;
 
             $("#page").append(somePage);
@@ -349,13 +341,13 @@
 
         // 下一页
         var afterLiFalse = $("<li> <span> <span aria-hidden='true'>&raquo;</span> </span> </li>");
-        var afterLiTrue = $("<li> <a href='#' onclick='pageAll(attr," + result.nextPage + ",3)' aria-label='Next'>下一页<span aria-hidden='true'>&raquo;</span></a> </li>");
+        var afterLiTrue = $("<li> <a href='#' onclick='pageAll(a," + result.nextPage + ",3)' aria-label='Next'>下一页<span aria-hidden='true'>&raquo;</span></a> </li>");
         var afterPage = result.hasNextPage ? afterLiTrue : afterLiFalse;
 
         $("#page").append(afterPage);
 
         //尾页
-        var lastPage = $("<li> <a href='#' onclick='pageAll(attr," + result.pages + ",3)'>尾页</a> </li>");
+        var lastPage = $("<li> <a href='#' onclick='pageAll(a," + result.pages + ",3)'>尾页</a> </li>");
         $("#page").append(lastPage);
 
         //当前页

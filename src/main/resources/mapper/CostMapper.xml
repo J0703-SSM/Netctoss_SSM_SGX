@@ -15,7 +15,10 @@
          <result column="startime" property="startime"/>
          <result column="cost_type" property="cost_type"/>
      </resultMap>
-
+    <sql id="Base_Column_List">
+        cost_id, name, base_duration, base_cost, unit_cost, status, descr, creatime, startime,
+        cost_type
+    </sql>
 
     <select id="findAll" resultMap="CostMap">
         SELECT  *FROM cost
@@ -30,7 +33,7 @@
     </update>
 
     <select id="selectById" resultMap="CostMap" parameterType="int">
-        SELECT *FROM cost WHERE cost_id=#{cost_id}
+        SELECT  <include refid="Base_Column_List"/> FROM cost WHERE cost_id=#{cost_id}
     </select>
 
     <update id="updateQy" parameterType="com.lanou.cost.domain.Cost">
@@ -40,4 +43,9 @@
     <insert id="insert" parameterType="com.lanou.cost.domain.Cost">
         INSERT INTO cost (name, base_duration, base_cost, unit_cost, status, descr, creatime, startime, cost_type) VALUES (#{name},#{base_duration},#{base_cost},#{unit_cost},#{status},#{descr},#{creatime},#{startime},#{cost_type})
     </insert>
+
+
+
+
+
 </mapper>
