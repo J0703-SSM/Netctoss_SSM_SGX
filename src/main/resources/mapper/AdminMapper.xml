@@ -4,10 +4,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lanou.base.mapper.AdminMapper">
 
+    <resultMap id="adminMap" type="com.lanou.admin.domain.Admin">
+        <id column="admin_id" property="admin_id"/>
+        <result column="admin_code" property="admin_code"/>
+        <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="telephone" property="telephone"/>
+        <result column="email" property="email"/>
+        <result column="enrolldate" property="enrolldate"/>
 
-    <select id="checkUser" resultType="com.lanou.admin.domain.Admin">
+        <collection property="roless" column="admin_id" ofType="com.lanou.role.domain.Role"
+                    select="com.lanou.base.mapper.RoleMapper.findRoleByAdminId"/>
+    </resultMap>
+
+    <select id="checkUser" resultMap="adminMap">
         SELECT *FROM admin_info WHERE admin_code = #{admin_code} and password =#{password}
     </select>
 
+    <select id="findByAdminId" resultMap="adminMap">
+        SELECT *FROM admin_info WHERE admin_id =#{admin_id}
+    </select>
 
+    <update id="updatePassword">
+        UPDATE admin_info SET password =#{newPassword} where admin_id = #{admin_id}
+    </update>
 </mapper>

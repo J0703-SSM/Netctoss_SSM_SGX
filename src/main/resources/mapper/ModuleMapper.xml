@@ -10,7 +10,7 @@
     </resultMap>
 
     <select id="findModuleByRoleId" resultMap="moduleMap">
-        SELECT  *FROM  module_info WHERE module_id IN(SELECT module_id FROM role_module WHERE role_id = #{role_id})
+        SELECT  *FROM  module_info WHERE module_id IN(SELECT role_module.module_id FROM role_module WHERE role_id = #{role_id})
     </select>
 
 </mapper>

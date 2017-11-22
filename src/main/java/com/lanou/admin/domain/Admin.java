@@ -1,6 +1,11 @@
 package com.lanou.admin.domain;
 
+import com.lanou.role.domain.Role;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by dllo on 17/11/20.
@@ -13,20 +18,26 @@ public class Admin {
     private String name;
     private String telephone;
     private String email;
-    private Date enrolldate;
+    private Timestamp enrolldate;
+
+    private List<Role> roless = new ArrayList<Role>();
+
+    public List<Role> getRoless() {
+        return roless;
+    }
+
+    public void setRoless(List<Role> roless) {
+        this.roless = roless;
+    }
 
     public Admin() {
     }
 
-    public Admin(Integer admin_id, String admin_code, String password, String name, String telephone, String email, Date enrolldate) {
-        this.admin_id = admin_id;
+    public Admin(String admin_code, String password) {
         this.admin_code = admin_code;
         this.password = password;
-        this.name = name;
-        this.telephone = telephone;
-        this.email = email;
-        this.enrolldate = enrolldate;
     }
+
 
     @Override
     public String toString() {
@@ -39,6 +50,24 @@ public class Admin {
                 ", email='" + email + '\'' +
                 ", enrolldate=" + enrolldate +
                 '}';
+    }
+
+    public Timestamp getEnrolldate() {
+        return enrolldate;
+    }
+
+    public void setEnrolldate(Timestamp enrolldate) {
+        this.enrolldate = enrolldate;
+    }
+
+    public Admin(Integer admin_id, String admin_code, String password, String name, String telephone, String email, Timestamp enrolldate) {
+        this.admin_id = admin_id;
+        this.admin_code = admin_code;
+        this.password = password;
+        this.name = name;
+        this.telephone = telephone;
+        this.email = email;
+        this.enrolldate = enrolldate;
     }
 
     public Integer getAdmin_id() {
@@ -89,11 +118,5 @@ public class Admin {
         this.email = email;
     }
 
-    public Date getEnrolldate() {
-        return enrolldate;
-    }
 
-    public void setEnrolldate(Date enrolldate) {
-        this.enrolldate = enrolldate;
-    }
 }

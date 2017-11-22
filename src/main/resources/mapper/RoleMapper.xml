@@ -48,9 +48,13 @@
         SELECT *FROM role_info WHERE name =#{name}
     </select>
 
-    <insert id="insertRole" parameterType="com.lanou.role.domain.Role" useGeneratedKeys="true" keyProperty="role_id" >
+    <insert id="insertRole" parameterType="com.lanou.role.domain.Role" useGeneratedKeys="true" keyProperty="role_id">
         insert into role_info (name) VALUES (#{name})
     </insert>
 
+
+    <select id="findRoleByAdminId" resultType="com.lanou.role.domain.Role">
+        SELECT * FROM  role_info WHERE role_id IN (SELECT admin_role.role_id FROM admin_role WHERE admin_id = #{admin_id})
+    </select>
 
 </mapper>

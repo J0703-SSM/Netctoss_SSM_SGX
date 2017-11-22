@@ -18,4 +18,17 @@ public class AdminServiceImpl implements AdminService {
     public Admin checkUser(Admin admin) {
         return adminMapper.checkUser(admin);
     }
+
+    public void updatePassword(Integer admin_id,String newPassword) {
+        adminMapper.updatePassword(admin_id,newPassword);
+    }
+
+    //修改密码
+//    public void findByAdminId(Integer admin_id, String newPassword) {
+//        Admin byAdminId = adminMapper.findByAdminId(admin_id);
+//        System.out.println(byAdminId);
+//        byAdminId.setPassword(newPassword);
+//    }
+
+
 }

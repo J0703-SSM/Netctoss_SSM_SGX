@@ -26,4 +26,8 @@ public interface RoleMapper {
     Role findRoleByName(String name);
 
     int insertRole(Role role);
+
+    List<Role> findRoleByAdminId();
+
+
 }

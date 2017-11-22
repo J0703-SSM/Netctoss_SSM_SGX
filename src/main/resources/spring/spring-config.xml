@@ -4,6 +4,24 @@
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--登录拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--要拦截的请求路径-->
+            <mvc:mapping path="/**"/>
+            <!--不拦截资源-->
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/images/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/styles/**"/>
+            <mvc:exclude-mapping path="/verifyCode"/>
+            <mvc:exclude-mapping path="/login.html"/>
+            <bean class="com.lanou.Interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
 <!--springMvc
 -->
   <!--1.配置注解模型 mvc-->
