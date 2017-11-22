@@ -30,7 +30,7 @@ public class CostController {
 
 
 
-    @RequestMapping("index")
+    @RequestMapping("/index")
     public String Jump(){
         return "index";
     }

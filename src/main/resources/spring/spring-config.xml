@@ -16,7 +16,7 @@
             <mvc:exclude-mapping path="/js/**"/>
             <mvc:exclude-mapping path="/styles/**"/>
             <mvc:exclude-mapping path="/verifyCode"/>
-            <mvc:exclude-mapping path="/login.html"/>
+            <mvc:exclude-mapping path="/login"/>
             <bean class="com.lanou.Interceptor.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
